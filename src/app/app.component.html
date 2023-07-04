@@ -1,0 +1,35 @@
+<form 
+  *ngIf="form$ | async as form" 
+  [formGroup]="form"
+  (submit)="onSubmit(form.value)">
+	<div 
+    formArrayName="roomTypes">
+		<div 
+      *ngFor="let roomType of form.controls['roomTypes'].controls; let index = index" 
+      [formGroupName]="index">
+			{{index}}
+			<div 
+        formArrayName="mealTypes">
+				<div 
+          *ngFor="let mealType of roomType.controls['mealTypes'].controls; let mealtypeIndex = index"
+          [formGroupName]="mealtypeIndex">
+					mealtype {{mealtypeIndex}}
+					<div 
+            formArrayName="marketGroups">
+						<div 
+              *ngFor="let marketGroup of mealType.controls['marketGroups'].controls; let marketGroupIndex = index" 
+              [formGroupName]="marketGroupIndex">
+							marketGroupIndex {{marketGroupIndex}}
+							
+              <market-group-form 
+                [marketGroupForm]="marketGroup">
+              </market-group-form>
+            </div> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button>Submit</button>
+  <!-- <pre>{{form.value | json}}</pre> -->
+</form>
